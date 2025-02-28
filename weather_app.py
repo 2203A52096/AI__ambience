@@ -12,6 +12,22 @@ import pandas as pd
 import numpy as np
 import os
 
+@st.cache_data
+def load_data():
+    file_path = "seattle-weather.csv"  # Ensure correct filename
+
+    if not os.path.exists(file_path):
+        st.error(f"Dataset not found: {file_path}. Please upload the dataset.")
+        return None  # Return None if file is missing
+
+    return pd.read_csv(file_path)
+
+df = load_data()
+
+# Check if data loaded successfully
+if df is None:
+    st.stop() 
+
 # Load trained SVM model
 import pickle  
 @st.cache_resource
