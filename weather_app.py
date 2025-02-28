@@ -74,9 +74,12 @@ elif page == "Prediction":
     model = load_model()
     input_data = [[precipitation, temp_max, temp_min, wind]]
     
+
     if st.button("Predict"):
-        prediction = model.predict(input_data)
-        st.success(f"Predicted Weather: {prediction[0]}")
+        prediction = model.predict(input_data)[0]  # Get prediction
+        predicted_weather = weather_mapping.get(prediction, "Unknown")  # Map prediction
+        
+        st.success(f"Predicted Weather: **{predicted_weather}**")
 # About Page (Pre-Saved Data Visualizations)
 elif page == "About":
     st.title("📊 Data Visualizations")
