@@ -72,32 +72,25 @@ elif page == "Prediction":
     wind = st.number_input("Wind Speed (km/h)", df["wind"].min(), df["wind"].max(), df["wind"].median())
 
     # Prediction button
-    if st.button("Predict"):
+   if st.button("Predict"):
         prediction = model.predict(input_data)[0]  # Get prediction
         predicted_weather = weather_mapping.get(prediction, "Unknown")  # Map prediction
         
-        st.success(f"Predicted Weather: **{predicted_weather}**")
+        st.success(f"Predicted Weather: **{predicted_weather}**")  
 # About Page (Pre-Saved Data Visualizations)
 elif page == "About":
     st.title("📊 Data Visualizations")
     st.write("Explore the dataset through **box plots** and **histograms**.")
+    st.subheader("Box Plots")
+    for column in df.select_dtypes(include=['int64', 'float64']).columns:
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.boxplot(x=df[column], ax=ax)
+        ax.set_title(f'Box Plot of {column}')
+        st.pyplot(fig)
 
-    # Define paths to pre-saved images
-    boxplot_dir = "boxplots"  # Ensure this directory exists and contains the saved images
-    histogram_dir = "histograms"  # Ensure this directory exists and contains the saved images
-
-    # Display Box Plots
-    st.subheader("Box Plots of Weather Variables")
-    for column in df.columns:
-        file_path = os.path.join(boxplot_dir, f"{column}_boxplot.png")
-        if os.path.exists(file_path):
-            st.image(file_path, caption=f"Box Plot of {column}")
-
-    # Display Histograms
-    st.subheader("Histograms of Weather Variables")
-    for column in df.columns:
-        file_path = os.path.join(histogram_dir, f"{column}_histogram.png")
-        if os.path.exists(file_path):
-            st.image(file_path, caption=f"Histogram of {column}")
-
-    st.write("This analysis helps in understanding the distribution of climate features.")
+    st.subheader("Histograms")
+    for column in df.select_dtypes(include=['int64', 'float64']).columns:
+        fig, ax = plt.subplots(figsize=(8, 6))
+        sns.histplot(df[column], bins=30, kde=True, ax=ax)
+        ax.set_title(f'Histogram of {column}')
+        st.pyplot(fig)
