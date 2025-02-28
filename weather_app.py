@@ -10,7 +10,6 @@ Original file is located at
 import streamlit as st
 import pandas as pd
 import numpy as np
-import joblib
 import os
 
 # Load dataset
@@ -21,9 +20,12 @@ def load_data():
 df = load_data()
 
 # Load trained SVM model
+import pickle  
 @st.cache_resource
 def load_model():
-    return joblib.load("model.pkl")  # Ensure the model file is in the same directory
+    with open("svm_model.pkl", "rb") as model_file:  # Open the model in binary read mode
+        model = pickle.load(model_file)
+    return model
 
 model = load_model()
 
