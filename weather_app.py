@@ -37,7 +37,7 @@ def load_model():
     return model
 
 model = load_model()
-
+weather_mapping = {0: "Sun", 1: "Snow", 2: "Rain", 3: "Drizzle", 4: "Fog"}
 # Sidebar navigation
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Prediction", "About"])
@@ -73,10 +73,10 @@ elif page == "Prediction":
 
     # Prediction button
     if st.button("Predict"):
-        features = np.array([[precipitation, temp_max, temp_min, wind]])  # Adjust feature order based on model training
-        prediction = model.predict(features)
-        st.success(f"Predicted Weather Condition: **{prediction[0]}**")
-
+        prediction = model.predict(input_data)[0]  # Get prediction
+        predicted_weather = weather_mapping.get(prediction, "Unknown")  # Map prediction
+        
+        st.success(f"Predicted Weather: **{predicted_weather}**")
 # About Page (Pre-Saved Data Visualizations)
 elif page == "About":
     st.title("📊 Data Visualizations")
