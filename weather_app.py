@@ -71,19 +71,12 @@ elif page == "Prediction":
     temp_min = st.slider("Min Temperature (°C)", df["temp_min"].min(), df["temp_min"].max(), df["temp_min"].median())
     precipitation = st.number_input("Precipitation (mm)", df["precipitation"].min(), df["precipitation"].max(), df["precipitation"].median())
     wind = st.number_input("Wind Speed (km/h)", df["wind"].min(), df["wind"].max(), df["wind"].median())
+    model = load_model()
+    input_data = [[precipitation, temp_max, temp_min, wind]]
+    
     if st.button("Predict"):
         prediction = model.predict(input_data)
-        st.success("Predicted Weather")
-        if prediction[0]==0:
-           st.success("Sun")
-        elif prediction[0]==1:
-            st.success("Snow")
-        elif prediction[0]==2:
-            st.success("rain")
-        elif prediction[0]==3:
-            st.success("drizzle")
-        else:
-            st.success("fog")
+        st.success(f"Predicted Weather: {prediction[0]}")
 # About Page (Pre-Saved Data Visualizations)
 elif page == "About":
     st.title("📊 Data Visualizations")
