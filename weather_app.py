@@ -45,20 +45,89 @@ page = st.sidebar.radio("Go to", ["Home", "Prediction", "About"])
 
 # Home Page
 if page == "Home":
-    st.title("🌍 Welcome to ClimAIte")
+    # Set Streamlit page configuration
+    st.set_page_config(
+        page_title="Climate Insight AI",
+        page_icon="🌍",
+        layout="wide"
+    )
+
+    # Custom CSS for better UI
+    st.markdown(
+        """
+        <style>
+        body {
+            background-color: #f5f5f5;
+        }
+        .main-content {
+            text-align: center;
+            font-size: 20px;
+        }
+        .title {
+            font-size: 40px;
+            font-weight: bold;
+            color: #007bff;
+            text-align: center;
+        }
+        .subtitle {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            text-align: center;
+        }
+        .info-box {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True
+    )
+
+    # ----------- HOME PAGE -----------
+    st.markdown("<p class='title'>🌍 Climate Insight AI</p>", unsafe_allow_html=True)
+    st.markdown("<p class='subtitle'>Your AI-Powered Climate Prediction Assistant</p>", unsafe_allow_html=True)
+
+    # Section with an image and description
+    col1, col2 = st.columns([1, 2])
+
+    with col1:
+        st.image("climate_image.jpg", use_container_width=True)  # Ensure the image exists in your project
+
+    with col2:
+        st.markdown(
+            """
+            <div class='info-box'>
+            🌎 **Why Climate Matters?**  
+            Climate change affects agriculture, water resources, health, and the economy.  
+            Understanding patterns can help us prepare for extreme weather and mitigate risks.
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    # Features Section
+    st.markdown("<p class='subtitle'>🚀 What This App Offers</p>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        - **🌦 Predict Weather Conditions**: Get AI-driven forecasts based on past climate data.
+        - **📊 Data Insights**: Explore box plots and histograms of climate patterns.
+        - **📡 Real-Time Analysis**: Understand key trends and how climate is changing.
+        - **⚡ Easy to Use**: A user-friendly interface powered by AI.
+        """
+    )
+
+    # Call to action
+    st.markdown(
+        "<p class='subtitle'>🛠 Start Exploring Now!</p>",
+        unsafe_allow_html=True
+    )
+    st.write("Navigate to the **Prediction** page to test the model, or check the **About** section for visual insights.")
+
     image_path = "climate_image.png"
-    st.markdown("""
-        Climate change is a major challenge affecting our planet.
-        Our **AI-powered climate prediction tool** helps analyze weather data
-        to provide valuable insights into future climate trends.
-
-        ### Why Climate Prediction Matters:
-        - Helps farmers prepare for changing weather conditions.
-        - Assists policymakers in environmental planning.
-        - Supports businesses in mitigating weather-related risks.
-
-        Navigate to the **Prediction** tab to see AI-powered weather forecasts!
-    """)
     st.image(image_path, use_container_width=True)  
 
 # Prediction Page
