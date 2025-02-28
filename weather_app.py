@@ -70,13 +70,11 @@ elif page == "Prediction":
     temp_min = st.slider("Min Temperature (°C)", df["temp_min"].min(), df["temp_min"].max(), df["temp_min"].median())
     precipitation = st.number_input("Precipitation (mm)", df["precipitation"].min(), df["precipitation"].max(), df["precipitation"].median())
     wind = st.number_input("Wind Speed (km/h)", df["wind"].min(), df["wind"].max(), df["wind"].median())
-
-    # Prediction button
-   if st.button("Predict"):
+    if st.button("Predict"):
         prediction = model.predict(input_data)[0]  # Get prediction
         predicted_weather = weather_mapping.get(prediction, "Unknown")  # Map prediction
         
-        st.success(f"Predicted Weather: **{predicted_weather}**")  
+        st.success(f"Predicted Weather: **{predicted_weather}**")  # Display mapped result
 # About Page (Pre-Saved Data Visualizations)
 elif page == "About":
     st.title("📊 Data Visualizations")
