@@ -1,6 +1,6 @@
 # AI__ambience
 # 🌍 ClimAIte: Predict. Adapt. Sustain. ⚡
-
+# Dataset is taken from 'https://www.kaggle.com/datasets/ananthr1/weather-prediction'
 ## 🔥 Inspiration  
 Climate change has caused extreme weather events, disrupting agriculture, transportation, and daily life. We wanted to build an **AI-powered climate prediction tool** that helps people understand and prepare for upcoming weather conditions. By leveraging **machine learning**, we provide accurate forecasts based on historical weather data.
 
