@@ -58,7 +58,7 @@ if page == "Home":
 
         Navigate to the **Prediction** tab to see AI-powered weather forecasts!
     """)
-    st.image(image_path, use_column_width=True)  
+    st.image(image_path, use_container_width=True)  
 
 # Prediction Page
 elif page == "Prediction":
