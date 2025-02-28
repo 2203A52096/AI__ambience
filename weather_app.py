@@ -58,7 +58,6 @@ if page == "Home":
 
         Navigate to the **Prediction** tab to see AI-powered weather forecasts!
     """)
-    st.image("climate_image.jpg", use_column_width=True)
     # Features Section
     st.markdown("<p class='subtitle'>🚀 What This App Offers</p>", unsafe_allow_html=True)
     st.markdown(
