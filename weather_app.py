@@ -44,74 +44,21 @@ st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Prediction", "About"])
 
 # Home Page
-# Set page config
-st.set_page_config(
-    page_title="Climate Insight AI",
-    page_icon="🌍",
-    layout="wide"
-)
-
-# Sidebar for navigation
-page = st.sidebar.radio("Navigation", ["Home", "Prediction", "About"])
-
 if page == "Home":
-    # 🎨 Custom CSS for better UI
-    st.markdown(
-        """
-        <style>
-        .stApp {
-            background-color: #f5f5f5;
-        }
-        .main-content {
-            text-align: center;
-            font-size: 20px;
-        }
-        .title {
-            font-size: 40px;
-            font-weight: bold;
-            color: #007bff;
-            text-align: center;
-        }
-        .subtitle {
-            font-size: 24px;
-            font-weight: bold;
-            color: #333;
-            text-align: center;
-        }
-        .info-box {
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+    st.title("🌍 Welcome to ClimAIte")
+    st.markdown("""
+        Climate change is a major challenge affecting our planet.  
+        Our **AI-powered climate prediction tool** helps analyze weather data  
+        to provide valuable insights into future climate trends.  
+        
+        ### Why Climate Prediction Matters:
+        - Helps farmers prepare for changing weather conditions.  
+        - Assists policymakers in environmental planning.  
+        - Supports businesses in mitigating weather-related risks.  
 
-    # ----------- HOME PAGE -----------
-    st.markdown("<p class='title'>🌍 Climate Insight AI</p>", unsafe_allow_html=True)
-    st.markdown("<p class='subtitle'>Your AI-Powered Climate Prediction Assistant</p>", unsafe_allow_html=True)
-
-    # Section with an image and description
-    col1, col2 = st.columns([1, 2])
-
-    with col1:
-        st.image("climate_image.jpg", use_column_width=True)  # Ensure this image exists in your project
-
-    with col2:
-        st.markdown(
-            """
-            <div class='info-box'>
-            🌎 **Why Climate Matters?**  
-            Climate change affects agriculture, water resources, health, and the economy.  
-            Understanding patterns can help us prepare for extreme weather and mitigate risks.
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
-
+        Navigate to the **Prediction** tab to see AI-powered weather forecasts!
+    """)
+    st.image("climate_image.jpg", use_column_width=True)
     # Features Section
     st.markdown("<p class='subtitle'>🚀 What This App Offers</p>", unsafe_allow_html=True)
     st.markdown(
