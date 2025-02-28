@@ -45,6 +45,7 @@ page = st.sidebar.radio("Go to", ["Home", "Prediction", "About"])
 # Home Page
 if page == "Home":
     st.title("🌍 Welcome to ClimAIte")
+    image_path = "climate_image.jpg"
     st.markdown("""
         Climate change is a major challenge affecting our planet.
         Our **AI-powered climate prediction tool** helps analyze weather data
@@ -57,7 +58,7 @@ if page == "Home":
 
         Navigate to the **Prediction** tab to see AI-powered weather forecasts!
     """)
-    st.image("climate_image.jpg", use_column_width=True)  # Add an image if available
+    st.image(image_path, use_column_width=True)  
 
 # Prediction Page
 elif page == "Prediction":
