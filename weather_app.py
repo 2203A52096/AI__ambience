@@ -12,13 +12,6 @@ import pandas as pd
 import numpy as np
 import os
 
-# Load dataset
-@st.cache_data
-def load_data():
-    return pd.read_csv("seattle-weather.csv")  # Replace with actual dataset filename
-
-df = load_data()
-
 # Load trained SVM model
 import pickle  
 @st.cache_resource
