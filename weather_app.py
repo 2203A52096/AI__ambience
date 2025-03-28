@@ -39,22 +39,6 @@ def load_model():
 model = load_model()
 weather_mapping = {0: "Sun", 1: "Snow", 2: "Rain", 3: "Drizzle", 4: "Fog"}
 
-clothing_recommendations = {
-    "Sun": "Wear light clothing to stay cool.\n\n**Men:**\n- T-shirt with shorts and sneakers\n- Polo shirt with lightweight chinos and loafers\n\n**Women:**\n- Sundress with sandals\n- Tank top with shorts and sneakers",
-    "Snow": "Dress in warm layers to protect from the cold.\n\n**Men:**\n- Thermal jacket, sweater, jeans, boots, gloves, and a beanie\n- Heavy coat, wool sweater, thick pants, snow boots, and a scarf\n\n**Women:**\n- Wool coat, sweater, leggings, boots, gloves, and a scarf\n- Puffer jacket, turtleneck, fleece-lined leggings, snow boots, and a beanie",
-    "Rain": "Stay dry with waterproof clothing.\n\n**Men:**\n- Raincoat, waterproof pants, boots, and an umbrella\n- Hooded windbreaker, jeans, waterproof sneakers, and a cap\n\n**Women:**\n- Trench coat, waterproof leggings, boots, and an umbrella\n- Light rain jacket, skinny jeans, waterproof boots, and a hat",
-    "Drizzle": "Light rain protection is sufficient.\n\n**Men:**\n- Hoodie, jeans, and sneakers\n- Light rain jacket, cargo pants, and casual shoes\n\n**Women:**\n- Light raincoat, jeans, and ankle boots\n- Cardigan, leggings, and waterproof flats",
-    "Fog": "Wear warm clothes and bright colors for visibility.\n\n**Men:**\n- Jacket, sweater, jeans, and a cap\n- Windbreaker, joggers, and sneakers\n\n**Women:**\n- Warm cardigan, pants, and boots\n- Trench coat, sweater, leggings, and high-top sneakers"
-}
-
-food_recommendations = {
-    "Sun": "Stay hydrated and eat refreshing foods!\n\n**Recommended meals:**\n- Fresh fruit salads with watermelon, mango, and berries\n- Cold sandwiches with grilled chicken, avocado, and lettuce\n- Yogurt parfaits with granola and honey\n- Smoothies with banana, spinach, and almond milk\n- Grilled vegetables with lean protein like chicken or fish",
-    "Snow": "Eat warm and hearty meals to stay cozy!\n\n**Recommended meals:**\n- Hot soups like chicken noodle, tomato soup, or lentil soup\n- Stews with beef, potatoes, and root vegetables\n- Roasted meats like lamb or turkey with mashed potatoes\n- Baked goods such as warm apple pie or cinnamon rolls\n- Warm drinks like hot chocolate, spiced tea, or mulled wine",
-    "Rain": "Comfort foods make rainy days better!\n\n**Recommended meals:**\n- Hot tea or coffee with biscuits\n- Warm soups like miso soup, creamy mushroom soup, or pho\n- Spicy noodles such as ramen or stir-fried udon\n- Grilled cheese sandwiches with tomato soup\n- Fried snacks like pakoras, samosas, or tempura",
-    "Drizzle": "A mix of light but warm meals works well!\n\n**Recommended meals:**\n- Herbal tea with honey and lemon\n- Warm sandwiches with turkey, cheese, and spinach\n- Porridge with cinnamon, nuts, and raisins\n- Light pasta dishes with olive oil, garlic, and cherry tomatoes",
-    "Fog": "Warm, comforting meals are best!\n\n**Recommended meals:**\n- Oatmeal with nuts, honey, and dried fruits\n- Warm vegetable soup with crusty bread\n- Hot cocoa with marshmallows or whipped cream\n- Steamed dumplings with soy sauce dip"
-}
-
 weather_jokes = [
     "Why did the sun go to school? To get a little brighter! ☀️",
     "What does a cloud wear under his raincoat? Thunderwear! ⛈️",
@@ -63,24 +47,34 @@ weather_jokes = [
     "How does a snowman get around? By riding an ‘icicle’! ⛄"
 ]
 
+def get_random_joke():
+    return random.choice(weather_jokes)
+
 st.sidebar.title("Navigation")
 page = st.sidebar.radio("Go to", ["Home", "Prediction", "Recommendations"])
 
 if page == "Home":
     st.title("🌍 Welcome to ClimAIte")
-    st.markdown(f"""
-        **Your AI-powered climate prediction assistant!** ❄️🌤️☔
-        
+    st.markdown(
+        """
+        <h3 style='text-align: center;'>Your AI-powered climate prediction assistant! ❄️🌤️☔</h3>
+        <p style='text-align: center; font-size: 18px;'>Helping you plan ahead for any weather condition.</p>
+        """, unsafe_allow_html=True)
+    
+    st.markdown(
+        """
         **Why Climate Prediction Matters:**
         - Helps farmers prepare for changing weather conditions.  
         - Assists policymakers in environmental planning.  
         - Supports businesses in mitigating weather-related risks.  
-        
-        **Fun Fact:** {random.choice(weather_jokes)}
-        
-        Navigate to the **Prediction** tab to see AI-powered weather forecasts!
-    """)
-    st.image("climate_image.png", width=500)
+        """
+    )
+    
+    st.image("climate_image.png", width=400)
+    
+    st.subheader("🌞 Fun Fact")
+    if st.button("Click for a Weather Joke!"):
+        st.markdown(f"**{get_random_joke()}**")
 
 elif page == "Prediction":
     st.title("🔮 Climate Prediction")
@@ -98,6 +92,19 @@ elif page == "Recommendations":
     st.title("👕🍲 Clothing & Food Recommendations")
     weather_choice = st.selectbox("Select Weather Condition", list(weather_mapping.values()))
     st.subheader("👕 Clothing Recommendation")
-    st.write(clothing_recommendations.get(weather_choice, "No recommendation available."))
+    st.write("\n\n**Men:**")
+    st.write("- Outfit 1: T-shirt with shorts and sneakers")
+    st.write("- Outfit 2: Polo shirt with lightweight chinos and loafers")
+    st.write("\n\n**Women:**")
+    st.write("- Outfit 1: Sundress with sandals")
+    st.write("- Outfit 2: Tank top with shorts and sneakers")
+    
     st.subheader("🍲 Food Recommendation")
-    st.write(food_recommendations.get(weather_choice, "No recommendation available."))
+    st.write(
+        "\n**Recommended meals:**\n"
+        "- Fresh fruit salads with watermelon, mango, and berries\n"
+        "- Cold sandwiches with grilled chicken, avocado, and lettuce\n"
+        "- Yogurt parfaits with granola and honey\n"
+        "- Smoothies with banana, spinach, and almond milk\n"
+        "- Grilled vegetables with lean protein like chicken or fish"
+    )
