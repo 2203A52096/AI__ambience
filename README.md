@@ -35,6 +35,30 @@ We followed a structured approach:
 - Designed an **interactive UI** for easy user input.  
 - Allowed users to enter **weather conditions (temperature, wind, precipitation, etc.)**.  
 - Integrated real-time prediction visualization.
+### 🌍 Streamlit App Features  
+ 
+### **Home page:**
+#### 🎨 **Enhanced UI & Design**  
+- Improved **homepage design** with a better-aligned image for an **aesthetic and engaging look**.  
+- Increased **font size** and optimized layout spacing for **better readability and user experience**.  
+
+#### 🎭 **Fun Facts & Jokes**  
+- The **Home Page** now features a **“Tell me a joke”** button, displaying a **random weather-related joke** for a fun user experience.  
+
+### 🔮 **Climate Prediction**  
+- Users can **input weather parameters** (temperature, wind speed, precipitation) to get **real-time weather predictions** using our trained ML model.  
+- The app uses **Support Vector Machines (SVM)** to classify weather into categories like **Sun, Snow, Rain, Drizzle, and Fog**.  
+
+#### 👕 **Clothing Recommendations**  
+- Based on the predicted weather, the app suggests **two outfit ideas for men and women** to help users dress appropriately.  
+- Example: For **Rainy Weather**, the recommendations include:  
+  - **Men:** Raincoat with waterproof pants, boots, and an umbrella  
+  - **Women:** Trench coat with waterproof leggings, boots, and an umbrella  
+
+#### 🍲 **Food Recommendations**  
+- Provides **detailed meal suggestions** based on weather conditions, ensuring users eat according to the climate.  
+- Example: On **a cold snowy day**, the app suggests hot soups, stews, and warm drinks like spiced tea. 
+---
 
 ## 🛠️ Built With  
 - **Python** – Core programming language for data processing and machine learning.  
