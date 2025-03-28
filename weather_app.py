@@ -68,7 +68,7 @@ page = st.sidebar.radio("Go to", ["Home", "Prediction", "Recommendations"])
 
 if page == "Home":
     st.title("🌍 Welcome to ClimAIte")
-    st.markdown("""
+    st.markdown(f"""
         **Your AI-powered climate prediction assistant!** ❄️🌤️☔
         
         **Why Climate Prediction Matters:**
@@ -76,11 +76,11 @@ if page == "Home":
         - Assists policymakers in environmental planning.  
         - Supports businesses in mitigating weather-related risks.  
         
-        **Fun Fact:** " + random.choice(weather_jokes) + "
+        **Fun Fact:** {random.choice(weather_jokes)}
         
         Navigate to the **Prediction** tab to see AI-powered weather forecasts!
     """)
-    st.image("climate_image.png", use_container_width=True)
+    st.image("climate_image.png", width=500)
 
 elif page == "Prediction":
     st.title("🔮 Climate Prediction")
