@@ -12,25 +12,21 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import os
+import pickle  
 
 @st.cache_data
 def load_data():
-    file_path = "seattle-weather.csv"  # Ensure correct filename
-
+    file_path = "seattle-weather.csv"  
     if not os.path.exists(file_path):
         st.error(f"Dataset not found: {file_path}. Please upload the dataset.")
         return None  # Return None if file is missing
-
     return pd.read_csv(file_path)
 
 df = load_data()
 
-# Check if data loaded successfully
 if df is None:
     st.stop() 
 
-# Load trained SVM model
-import pickle  
 @st.cache_resource
 def load_model():
     with open("model.pkl", "rb") as model_file:  # Open the model in binary read mode
@@ -39,11 +35,26 @@ def load_model():
 
 model = load_model()
 weather_mapping = {0: "Sun", 1: "Snow", 2: "Rain", 3: "Drizzle", 4: "Fog"}
-# Sidebar navigation
-st.sidebar.title("Navigation")
-page = st.sidebar.radio("Go to", ["Home", "Prediction", "About"])
 
-# Home Page
+clothing_recommendations = {
+    "Sun": "Wear light clothing to stay cool. Recommended outfits: Men - T-shirt with shorts and sneakers; Women - Sundress or tank top with shorts and sandals.",
+    "Snow": "Dress in warm layers to protect from the cold. Recommended outfits: Men - Thermal jacket, sweater, jeans, boots, gloves, and a beanie; Women - Wool coat, sweater, leggings, boots, gloves, and a scarf.",
+    "Rain": "Stay dry with waterproof clothing. Recommended outfits: Men - Raincoat, waterproof pants, boots, and an umbrella; Women - Trench coat, waterproof leggings, boots, and an umbrella.",
+    "Drizzle": "Light rain protection is sufficient. Recommended outfits: Men - Hoodie, jeans, and sneakers; Women - Light raincoat, jeans, and ankle boots.",
+    "Fog": "Wear warm clothes and bright colors for visibility. Recommended outfits: Men - Jacket, sweater, jeans, and a cap; Women - Warm cardigan, pants, and boots."
+}
+
+food_recommendations = {
+    "Sun": "In hot weather, it is important to stay hydrated and consume light, refreshing foods. Recommended meals: Fresh fruit salads, cold sandwiches, yogurt parfaits, smoothies, and grilled vegetables with lean protein like chicken or fish.",
+    "Snow": "Cold weather demands warm and hearty meals to maintain body heat. Recommended meals: Hot soups like chicken noodle or tomato soup, stews, roasted meats, baked potatoes, and warm drinks such as hot chocolate or spiced tea.",
+    "Rain": "Comfort foods are great for rainy weather. Recommended meals: Hot tea or coffee with biscuits, warm soups, spicy noodles, grilled cheese sandwiches, and fried snacks like pakoras or samosas.",
+    "Drizzle": "A mix of light but warm meals works well. Recommended meals: Herbal tea with honey, warm sandwiches, porridge, or light pasta dishes.",
+    "Fog": "Warm, comforting meals help in misty conditions. Recommended meals: Oatmeal with nuts and honey, warm vegetable soup, hot cocoa, and steamed dumplings."
+}
+
+st.sidebar.title("Navigation")
+page = st.sidebar.radio("Go to", ["Home", "Prediction", "Recommendations"])
+
 if page == "Home":
     st.title("🌍 Welcome to ClimAIte")
     st.markdown("""
@@ -55,64 +66,34 @@ if page == "Home":
         - Helps farmers prepare for changing weather conditions.  
         - Assists policymakers in environmental planning.  
         - Supports businesses in mitigating weather-related risks.  
-
+        
         Navigate to the **Prediction** tab to see AI-powered weather forecasts!
     """)
-    # Features Section
-    st.markdown("<p class='subtitle'>🚀 What This App Offers</p>", unsafe_allow_html=True)
-    st.markdown(
-        """
-        - **🌦 Predict Weather Conditions**: Get AI-driven forecasts based on past climate data.
-        - **📊 Data Insights**: Explore box plots and histograms of climate patterns.
-        - **📡 Real-Time Analysis**: Understand key trends and how climate is changing.
-        - **⚡ Easy to Use**: A user-friendly interface powered by AI.
-        """
-    )
+    st.image("climate_image.png", use_container_width=True)  
 
-    # Call to action
-    st.markdown(
-        "<p class='subtitle'>🛠 Start Exploring Now!</p>",
-        unsafe_allow_html=True
-    )
-    st.write("Navigate to the **Prediction** page to test the model, or check the **About** section for visual insights.")
-    image_path = "climate_image.png"
-    st.image(image_path, use_container_width=True)  
-
-# Prediction Page
 elif page == "Prediction":
     st.title("🔮 Climate Prediction")
     st.write("Enter weather conditions to predict the category of the climate.")
 
-    # User inputs
     temp_max = st.slider("Max Temperature (°C)", df["temp_max"].min(), df["temp_max"].max(), df["temp_max"].median())
     temp_min = st.slider("Min Temperature (°C)", df["temp_min"].min(), df["temp_min"].max(), df["temp_min"].median())
     precipitation = st.number_input("Precipitation (mm)", df["precipitation"].min(), df["precipitation"].max(), df["precipitation"].median())
     wind = st.number_input("Wind Speed (km/h)", df["wind"].min(), df["wind"].max(), df["wind"].median())
-    model = load_model()
+    
     input_data = [[precipitation, temp_max, temp_min, wind]]
     
-
     if st.button("Predict"):
         prediction = model.predict(input_data)[0]  # Get prediction
         predicted_weather = weather_mapping.get(prediction, "Unknown")  # Map prediction
-        
         st.success(f"Predicted Weather: **{predicted_weather}**")
-# About Page (Pre-Saved Data Visualizations)
-elif page == "About":
-    st.title("📊 Data Visualizations")
-    st.write("Explore the dataset through **box plots** and **histograms**.")
-    st.subheader("Box Plots")
-    for column in df.select_dtypes(include=['int64', 'float64']).columns:
-        fig, ax = plt.subplots(figsize=(8, 6))
-        sns.boxplot(x=df[column], ax=ax)
-        ax.set_title(f'Box Plot of {column}')
-        st.pyplot(fig)  # Show the plot
-
-    # Display Histograms
-    st.subheader("Histograms")
-    for column in df.select_dtypes(include=['int64', 'float64']).columns:
-        fig, ax = plt.subplots(figsize=(8, 6))
-        sns.histplot(df[column], bins=30, kde=True, ax=ax)
-        ax.set_title(f'Histogram of {column}')
-        st.pyplot(fig)  # Show the plot
+        
+elif page == "Recommendations":
+    st.title("👕🍲 Clothing & Food Recommendations")
+    weather_choice = st.selectbox("Select Weather Condition", list(weather_mapping.values()))
+    
+    st.subheader("👕 Clothing Recommendation")
+    st.write(clothing_recommendations.get(weather_choice, "No recommendation available."))
+    
+    st.subheader("🍲 Food Recommendation")
+    st.write(food_recommendations.get(weather_choice, "No recommendation available."))
 
